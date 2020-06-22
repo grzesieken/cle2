@@ -1,0 +1,18 @@
+version: '3'
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      args:
+        JAR_FILE: DataGenerator-0.1-SNAPSHOT-jar-with-dependencies.jar
+    restart: on-failure
+    depends_on:
+      - cassandra
+  cassandra:
+    build:
+      context: .
+      dockerfile: cassandra/Dockerfile
+    ports:
+      - "9042:9042"
+    container_name: cassandra
